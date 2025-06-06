@@ -15,3 +15,6 @@ Hosted on the University of Vermont Silk Server:
 - Real-time NWM forecast viewer
 - Event classification by season
 
+## Additional Files Folder
+
+The additional_files folder contains files that were used to set up the application but should not included when running the app itself. 
