@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Site Info - Watershed Dashboard</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+</head>
+<body>
+    <header>
+        <h1>West Branch Little River</h1>
+
+        <section id="project-info">
+            <h2></h2>
+            <p>The National Water Model (NWM) serves as a powerful tool for generating flow predictions, but having revised and corrected predictions in an accessible format is crucial for a broader audience beyond hydrology experts. By presenting this information in a dashboard format, this project ensures that specialists and the general public can easily interpret and utilize real-time water data to support decision making and risk assessment.</p>
+            <p></p>
+        </section>
+        
+        <nav>
+            <a href="/">Site Info</a>
+            <a href="/flow_prediction">Flow Prediction</a>
+            <a href="/nwm_assessment">NWM Assessment</a>
+            <a href="/external_resources">External Resources</a>
+        </nav>
+    </header>
+
+    <section id="photo-section">
+        <h2>Site Photo</h2>
+        <img src="{{ url_for('static', filename='placeholder_image.jpg') }}" alt="Site Photo">
+        
+    </section>
+
+   
+
+    <section id="site-info">
+        <h2>Site Overview</h2>
+        <p>The <strong>West Branch Little River</strong> is located in <strong>Lamoille County, Vermont</strong>. 
+            It is a stream of the Little River, which drains into the Winooski River Basin. 
+            The site is influenced by nearby Mount Mansfield, which affects runoff patterns, seasonal snowmelt, and precipitation.</p>
+        
+    </section>
+
+    <section id="map-section">
+        <h2>Location Map</h2>
+        <div id="map"></div>
+    </section>
+
+    <!-- Leaflet JavaScript -->
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <script>
+        
+        var map = L.map('map').setView([	44.4425, 	-72.724444], 13); // Coordinates
+
+        
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        
+        L.marker([44.4425, -72.724444]).addTo(map)
+            .bindPopup("<b>West Branch Little River</b><br>Gauge Site")
+            .openPopup();
+    </script>
+
+    <section id="station-data">
+        <h2>Station Data</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>Metadata Element</th>
+                    <th>Location Metadata</th>
+                    <th>Metadata Code</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr><td>Agency</td><td>U.S. Geological Survey</td><td>USGS</td></tr>
+                <tr><td>Site ID</td><td>04288295</td><td>n/a</td></tr>
+                <tr><td>Site Name</td><td>LITTLE RIVER NEAR STOWE, VT</td><td>n/a</td></tr>
+                <tr><td>Site Type</td><td>Stream</td><td>ST</td></tr>
+                <tr><td>DMS Latitude</td><td>442633</td><td>n/a</td></tr>
+                <tr><td>DMS Longitude</td><td>00724328</td><td>n/a</td></tr>
+                <tr><td>Decimal Latitude</td><td>44.4425</td><td>n/a</td></tr>
+                <tr><td>Decimal Longitude</td><td>-72.724444</td><td>n/a</td></tr>
+                <tr><td>Latitude-longitude method</td><td>Interpolated from Digital MAP.</td><td>N</td></tr>
+                <tr><td>Latitude-longitude accuracy</td><td>Accurate to + or - 0.5 sec (PLGR/PPS GPS).</td><td>5</td></tr>
+                <tr><td>Latitude-longitude datum</td><td>North American Datum of 1927</td><td>NAD27</td></tr>
+                <tr><td>Decimal Latitude-longitude datum</td><td>North American Datum of 1983</td><td>NAD83</td></tr>
+                <tr><td>District</td><td>New Hampshire</td><td>33</td></tr>
+                <tr><td>State</td><td>Vermont</td><td>50</td></tr>
+                <tr><td>County</td><td>Lamoille County</td><td>015</td></tr>
+                <tr><td>Country</td><td>US</td><td>n/a</td></tr>
+                <tr><td>Altitude of Gage</td><td>608.06 feet</td><td>n/a</td></tr>
+                <tr><td>Method altitude determined</td><td>GNSS2 - Level or other surveyed method.</td><td>L</td></tr>
+                <tr><td>Altitude accuracy</td><td>0.01 feet</td><td>n/a</td></tr>
+                <tr><td>Altitude datum</td><td>North American Vertical Datum of 1988</td><td>NAVD88</td></tr>
+                <tr><td>Subbasin hydrologic unit</td> Winooski River<td>04150403</td><td>n/a</td></tr>
+                <tr><td>Drainage Area</td><td>66.6 square miles</td><td>n/a</td></tr>
+                <tr><td>Time Zone</td><td>EST</td><td>n/a</td></tr>
+                <tr><td>Site honors Daylight Saving Time</td><td>Y</td><td>n/a</td></tr>
+            
+                <tr>
+                    <td><strong>Citation</strong></td>
+                    <td colspan="2">
+                        <a href="https://waterdata.usgs.gov/monitoring-location/04288295/#dataTypeId=continuous-00065-0&period=P7D&showMedian=false" target="_blank">
+                            USGS Water Data Site 04288295
+                        </a>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+</body>
+</html>

@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Flow Prediction - Watershed Dashboard</title>
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <h1>West Branch Little River</h1>
+        <nav>
+            <a href="/">Site Info</a>
+            <a href="/flow_prediction">Flow Prediction</a>
+            <a href="/nwm_assessment">NWM Assessment</a>
+            <a href="/external_resources">External Resources</a>
+        </nav>
+    </header>
+
+    <section id="graph-section">
+        <h2>Flow Forecast (NWM Mid-Range)</h2>
+        <div id="forecast-graph"></div>
+        <script>
+            // Plotly graph setup
+            var graphData = {{ graph_json | safe }};
+            Plotly.newPlot('forecast-graph', graphData.data, graphData.layout);
+        </script>
+    </section>
+
+    <section id="options-section">
+        <h2>Options</h2>
+        <label for="overlay">Overlay Corrected vs Uncorrected:</label>
+        <input type="checkbox" id="overlay">
+    </section>
+
+    <section id="image-section">
+        <img src="{{ url_for('static', filename='west_branch.png') }}" alt="West Branch">
+    </section>
+</body>
+</html>

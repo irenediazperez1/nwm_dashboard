@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NWM Performance Assessment</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <script src="https://cdn.plot.ly/plotly-latest.min.js"></script>
+</head>
+<body>
+    <header>
+        <h1>NWM Performance Assessment</h1>
+        <nav>
+            <a href="/">Site Info</a>
+            <a href="/flow_prediction">Flow Prediction</a>
+            <a href="/nwm_assessment">NWM Assessment</a>
+            <a href="/external_resources">External Resources</a>
+        </nav>
+    </header>
+
+    <section id="assessment">
+        <h2>Event-Based Performance</h2>
+
+        <!-- Season Filter -->
+        <label for="seasonFilter"><strong>Filter by Season:</strong></label>
+        <select id="seasonFilter">
+            <option value="All">All</option>
+            <option value="Winter">Winter</option>
+            <option value="Spring">Spring</option>
+            <option value="Summer">Summer</option>
+            <option value="Fall">Fall</option>
+        </select>
+
+        <table class="table table-striped">
+            <thead>
+                <tr>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='event_id', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">Event No.</a></th>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='start', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">Start Time</a></th>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='end', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">End Time</a></th>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='correlation', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">Correlation</a></th>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='bias', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">Bias (%)</a></th>
+                    <th><a href="{{ url_for('nwm_assessment', sort_by='nse', sort_order='asc' if sort_order == 'desc' else 'desc', page=current_page) }}">NSE</a></th>
+                    <th>Season</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for event in all_data %}
+                <tr onclick="toggleGraph('{{ event.event_id }}')" class="eventRow" data-season="{{ event.season }}">
+                    <td>{{ event.event_id }}</td>
+                    <td>{{ event.start }}</td>
+                    <td>{{ event.end }}</td>
+                    <td>{{ event.correlation }}</td>
+                    <td>{{ event.bias }}</td>
+                    <td>{{ event.nse }}</td>
+                    <td>{{ event.season }}</td>
+                </tr>
+                <tr id="graph_{{ event.event_id }}" class="graph-container" style="display:none;">
+                    <td colspan="7">
+                        <div id="plot_{{ event.event_id }}"></div>
+                        <script>
+                            var graphData = {{ graphs[event.event_id]|safe }};
+                            Plotly.newPlot('plot_{{ event.event_id }}', graphData.data, graphData.layout);
+                        </script>
+                    </td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            <a href="{{ url_for('nwm_assessment', page=current_page - 1, sort_by=sort_by, sort_order=sort_order) }}" {% if current_page == 1 %}class="disabled"{% endif %}>Previous</a>
+            {% for p in range(1, total_pages + 1) %}
+                <a href="{{ url_for('nwm_assessment', page=p, sort_by=sort_by, sort_order=sort_order) }}" class="{% if p == current_page %}active{% endif %}">{{ p }}</a>
+            {% endfor %}
+            <a href="{{ url_for('nwm_assessment', page=current_page + 1, sort_by=sort_by, sort_order=sort_order) }}" {% if current_page == total_pages %}class="disabled"{% endif %}>Next</a>
+        </div>
+    </section>
+
+    <!-- Kruskal-Wallis Results -->
+    <section>
+        <h2>Kruskal-Wallis Test Results</h2>
+        <p><strong>H-statistic:</strong> {{ anova.h_stat }}</p>
+        <p><strong>p-value:</strong> {{ anova.p_value }}</p>
+    </section>
+
+    <!-- Boxplot -->
+    <section>
+        <h2>Seasonal Bias Distribution</h2>
+        <div id="boxplot"></div>
+        <script>
+            const boxplotData = {{ boxplot_json | safe }};
+            Plotly.newPlot('boxplot', boxplotData.data, boxplotData.layout);
+        </script>
+    </section>
+
+    <!-- JS -->
+    <script>
+        function toggleGraph(eventId) {
+            const graphRow = document.getElementById("graph_" + eventId);
+            graphRow.style.display = (graphRow.style.display === "none" || graphRow.style.display === "") ? "table-row" : "none";
+        }
+
+        document.getElementById('seasonFilter').addEventListener('change', function () {
+            const selected = this.value;
+            document.querySelectorAll('.eventRow').forEach(row => {
+                const season = row.dataset.season;
+                row.style.display = (selected === "All" || season === selected) ? "" : "none";
+                const graphRow = document.getElementById("graph_" + row.children[0].innerText);
+                if (graphRow) graphRow.style.display = "none";
+            });
+        });
+    </script>
+</body>
+</html>

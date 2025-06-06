@@ -1,0 +1,169 @@
+body {
+    font-family: Palatino, sans-serif;
+    margin: 0;
+    padding: 0;
+    text-align: center;
+    
+}
+
+header {
+    background-color: #3255a8;
+    color: white;
+    padding: 1em 0;
+    margin-bottom: 1em;
+}
+
+/* NAV */
+nav{
+    background-color: whitesmoke;
+    padding: 1%;
+    text-align: center;
+}
+
+nav a:hover{
+    text-decoration: underline dotted;
+}
+
+nav a{
+    display: inline-block;
+    padding: 1%;
+    margin: 1%;
+
+}
+
+nav a:link{
+    color: lightslategray;
+    text-decoration: none;
+}
+
+nav{
+    grid-area: nav;
+    display: grid;
+    grid-template-columns: auto auto auto auto;
+}
+
+/* Classes */
+
+#photo-section {
+    margin: 1.26em 0;
+}
+
+#photo-section img {
+    width: 80%;
+    max-width: 37.5em;
+    height: auto;
+    border-radius: 0.625em;
+    border: 0.0625 solid #ccc;
+}
+#image-section {
+    margin: 1.26em 0;
+}
+
+#image-section img {
+    width: 80%;
+    max-width: 50em;
+    height: auto;
+    border-radius: 0.625em;
+    border: 0.0625 solid #ccc;
+}
+
+#map-and-graph {
+    display: grid;
+    justify-content: center;
+    gap: 1.25em;
+    margin: 1.25em 0;
+}
+
+#map-container, #graph-container {
+    width: 90%;
+    max-width: 31.25em;
+    border: 0.0625em solid #ddd;
+    padding: 0.0625em;
+    border-radius: 0.625em;
+}
+
+#map-placeholder {
+    height: 18.75em;
+    background-color: #f0f0f0;
+    display: grid;
+    align-items: center;
+    justify-content: center;
+    color: #888;
+    font-size: 1.25em;
+    font-style: italic;
+}
+
+#forecast-graph {
+    height: 30em;
+}
+
+table {
+    width: 90%;
+    margin: 1.25em auto;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+th, td {
+    border: 0.065em solid #ddd;
+    padding: 0.5em;
+}
+
+th {
+    background-color: #f2f2f2;
+}
+
+/* Center the paragraph and limit width */
+#site-info, #project-info {
+    text-align: center;
+    width: 80%;
+    max-width: 50em; /* Limits maximum width for better readability */
+    margin: 2em auto; /* Centers the content horizontally */
+    padding: 2em;
+}
+
+/* Ensure the paragraph text is readable and not too wide */
+#site-info p, #project-info p {
+    text-align: justify; /* Aligns text for better readability */
+    line-height: 1.6em; /* Increases line spacing for readability */
+}
+
+/* Set the map container size */
+#map {
+    height: 25em;
+    width: 80%;
+    max-width: 50em;
+    margin: 1.25px auto;
+    border-radius: 0.625px;
+    box-shadow: 0 0.625px 0.32em rgba(0, 0, 0, 0.2);
+}
+
+.graph-container {
+    display: none;
+}
+
+table td:hover {
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+.pagination {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.pagination a {
+    margin: 0 5px;
+    padding: 8px 16px;
+    text-decoration: none;
+}
+
+.pagination a.active {
+    font-weight: bold;
+}
+
+.pagination a.disabled {
+    color: grey;
+    pointer-events: none;
+}
+
