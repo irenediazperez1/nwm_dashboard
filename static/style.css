@@ -133,9 +133,9 @@ th {
     height: 25em;
     width: 80%;
     max-width: 50em;
-    margin: 1.25px auto;
-    border-radius: 0.625px;
-    box-shadow: 0 0.625px 0.32em rgba(0, 0, 0, 0.2);
+    margin: 0.078125em auto;
+    border-radius: 0.0390625em;
+    box-shadow: 0 0.0390625em 0.32em rgba(0, 0, 0, 0.2);
 }
 
 .graph-container {
@@ -149,12 +149,12 @@ table td:hover {
 
 .pagination {
     text-align: center;
-    margin-top: 20px;
+    margin-top: 1.25em;
 }
 
 .pagination a {
-    margin: 0 5px;
-    padding: 8px 16px;
+    margin: 0 0.3125em;
+    padding: 0.5em 1em;
     text-decoration: none;
 }
 
